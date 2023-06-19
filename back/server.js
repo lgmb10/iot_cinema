@@ -2,9 +2,8 @@ const express = require('express');
 const app = express();
 var cors = require('cors');
 var path = require('path');
-if (process.env.NODE_ENV !== 'PRODUCTION') {
-    require('dotenv').config({ path: path.resolve(__dirname + '/config/.env') });
-}
+require('dotenv').config({ path: path.resolve(__dirname + '/.env') });
+
 const sensor = require('./routes/sensor');
 const port = process.env.PORT || 8000;
 
