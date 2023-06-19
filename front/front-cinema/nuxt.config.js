@@ -22,21 +22,28 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ["~/plugin/api.js"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    "@nuxtjs/dotenv",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // Doc: https://www.primefaces.org/primevue/showcase-v2/#/setup
     'primevue/nuxt',
+    '@nuxtjs/axios',
   ],
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
+    baseURL: "/",
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
