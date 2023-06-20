@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="loaded">
-      {{ data }}
+<!--      {{ data }}-->
     </div>
   </div>
 </template>
