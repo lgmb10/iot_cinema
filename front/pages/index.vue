@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p>Whs alors ma race</p>
-    <Test></Test>
+    <MovieRoomOverview />
   </div>
 </template>
 
@@ -11,3 +10,5 @@ export default {
   layout: "DefaultLayout",
 };
 </script>
+
+
