@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
-var cors = require('cors');
-var path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname + '/.env') });
+const cors = require('cors');
+const path = require('path');
+const mqtt = require('mqtt')
+const { initMqtt } = require('./utils/mqttHelper');
+require('dotenv').config();
+const connectDatabase = require('./config/database');
 
 const sensor = require('./routes/sensor');
 const port = process.env.PORT || 8000;
@@ -12,6 +15,19 @@ const corsOptions = {
     credentials: true,
     optionSuccessStatus: 200
 }
+
+const mqttOptions = {
+    host: process.env.MQTT_HOST,
+    port: process.env.MQTT_PORT,
+    protocol: 'mqtts',
+    username: process.env.MQTT_USERNAME,
+    password: process.env.MQTT_PASSWORD,
+}
+
+connectDatabase();
+
+let client = mqtt.connect(mqttOptions)
+initMqtt(client);
 
 app.use(express.static(path.join(__dirname, '..')));
 app.use(express.static(__dirname + '/dist'));

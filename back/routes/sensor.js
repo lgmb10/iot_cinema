@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const {
-    getSensors,
+    getSensorsByRoom,
 } = require("../controllers/sensorController");
 
-router.route("/sensors").get(getSensors);
+router.route("/sensors/:room").get(getSensorsByRoom);
 
 module.exports = router;
