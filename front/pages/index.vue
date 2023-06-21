@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-btn
-      elevation="2"
-    >Bonjour</v-btn>
-    <p>Whs alors ma race</p>
+    <MovieRoomOverview />
     <Test></Test>
   </div>
 </template>
