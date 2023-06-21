@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <Navigation />
-    <Nuxt class="grow p-5" />
+    <Nuxt class="w-full p-5" />
   </div>
 </template>
 
@@ -12,5 +12,8 @@ export default {};
 <style lang="css">
 *{
   font-family: 'Roboto', sans-serif;
+}
+html{
+  overflow-y: scroll;
 }
 </style>

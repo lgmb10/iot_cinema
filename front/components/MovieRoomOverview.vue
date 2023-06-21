@@ -30,7 +30,13 @@
 
 <script>
 export default {
-  name: "movieRoomOverview"
+  name: "movieRoomOverview",
+  props: {
+    info: {
+      type: Array,
+      default: null,
+    },
+  },
 }
 </script>
 

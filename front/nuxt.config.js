@@ -24,7 +24,10 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~/plugin/api.js"],
+  plugins: [
+    { src: '~/plugin/apex-chart.js', mode: 'client' },
+    "~/plugin/api.js",
+    { src: '~/plugin/vuetify.js', mode: 'client' },],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -32,14 +35,18 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     "@nuxtjs/dotenv",
-    '@nuxtjs/vuetify',
+
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // Doc: https://www.primefaces.org/primevue/showcase-v2/#/setup
     '@nuxtjs/axios',
+    '@nuxtjs/vuetify',
   ],
+
+  vuetify: {
+    optionsPath: './vuetify.options.js'
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
