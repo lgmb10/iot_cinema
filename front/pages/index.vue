@@ -1,7 +1,6 @@
 <template>
   <div>
     <MovieRoomOverview />
-    <Test></Test>
   </div>
 </template>
 

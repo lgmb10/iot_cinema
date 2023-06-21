@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <header class="shrink-0 h-screen bg-slate-200 z-10 drop-shadow-md">
+  <div class="shrink-0">
+    <header class="sticky top-0 h-screen bg-slate-200 z-10 drop-shadow-md">
       <div class="flex flex-col justify-center items-start px-5">
         <div class="self-center flex items-center py-4">
           <img src="~/assets/images/logo.svg" alt="" class="block w-9 pr-1">
           <h1 class="text-3xl font-bold text-center text-sky-950 leading-none">
-            CineSens
+            <NuxtLink to="/">CineSens</NuxtLink>
           </h1>
         </div>
         <nav class="pt-5">
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style scoped>
-.nuxt-link-exact-active {
+li .nuxt-link-exact-active {
   font-weight: bold;
   @apply text-sky-800;
 }
