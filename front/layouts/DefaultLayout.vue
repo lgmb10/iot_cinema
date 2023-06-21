@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <Navigation />
-    <Nuxt class="grow" />
+    <Nuxt class="grow p-5" />
   </div>
 </template>
 
