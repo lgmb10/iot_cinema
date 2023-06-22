@@ -91,10 +91,4 @@ export default {
 };
 </script>
 
-<style lang="css">
-.alert_error{
-  transform: translateX(-50%);
-}
-</style>
-
 
