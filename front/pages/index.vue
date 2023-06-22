@@ -3,11 +3,7 @@
     <div v-if="loaded" class="flex flex-row gap-5 flex-wrap justify-center">
       <MovieRoomOverview
         v-for="(room, index) in sensorsData" :key="index"
-        :temp=room.temperature.value
-        :temp-time=room.temperature.date
-        :humidity=room.humidity.value
-        :humidity-time=room.humidity.date
-        :sound-level=room.sound
+        :data=room
         :room-number=index.slice(-1)
       />
     </div>
