@@ -32,10 +32,11 @@
 export default {
   name: "movieRoomOverview",
   props: {
-    info: {
-      type: Array,
-      default: null,
-    },
+    temp: String,
+    tempTime : String,
+    humidity : String,
+    humidityTime : String,
+    soundLevel : String,
   },
 }
 </script>
