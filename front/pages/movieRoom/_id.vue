@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <div class="flex justify-between items-start pb-4">
       <h1 class="text-lg text-sky-950 font-bold">Données de la salle {{ roomNumber }}</h1>
       <v-btn
@@ -10,32 +10,91 @@
       </v-btn>
     </div>
 
-    <div class="w-full">
-      <SensorChart :title="'Température | °C'" :yaxis="tempYaxis" :xaxis="tempXaxis"/>
-      <SensorChart :title="'Taux d\'humidité | %'" :yaxis="tempYaxis" :xaxis="tempXaxis"/>
-      <SensorChart :title="'Niveau sonore | db'" :yaxis="tempYaxis" :xaxis="tempXaxis"/>
+
+    <div v-if="loaded" class="w-full">
+      <SensorChart :title="'Température | °C'" :yaxis="chartData.temperature.yaxis" :xaxis="chartData.temperature.xaxis"/>
+      <SensorChart :title="'Taux d\'humidité | %'" :yaxis="chartData.humidity.yaxis" :xaxis="chartData.humidity.xaxis"/>
+      <SensorChart :title="'Niveau sonore | db'" :yaxis="chartData.soundLevel.yaxis" :xaxis="chartData.soundLevel.xaxis"/>
     </div>
+    <div v-else>
+      <v-skeleton-loader
+        class="mx-auto"
+        type="card"
+      ></v-skeleton-loader>
+      <v-skeleton-loader
+        class="mx-auto"
+        type="card"
+      ></v-skeleton-loader>
+      <v-skeleton-loader
+        class="mx-auto"
+        type="card"
+      ></v-skeleton-loader>
+    </div>
+
+    <div v-if="serverError" class="absolute top-3 left-1/2 alert_error">
+      <v-alert
+        color="red"
+        elevation="2"
+        type="error"
+        dismissible
+      >&nbsp;Une erreur s'est produite&nbsp;</v-alert>
+    </div>
+
 
   </div>
 </template>
 
 <script>
+import { parseDataToChart } from "~/utils/jsonParser";
+
 export default {
+
   name: "movieRoomPage",
   layout: "DefaultLayout",
   data() {
     return {
       roomNumber: "N/A",
       editLink: "",
-      tempXaxis: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"],
-      tempYaxis: [22.5, 23, 24, 23.5, 22.5, 21, 21.5],
+      loaded: false,
+      serverError: false,
+      sensorsData: null,
+      chartData: {
+        temperature: Array,
+        humidity: Array,
+        soundLevel: Array,
+      },
+    }
+  },
+  methods: {
+    displayData() {
+      this.$api.getRoomInfo(this.roomNumber)
+        .then((res) => {
+          this.sensorsData = res.sensors;
+          this.chartData.temperature = parseDataToChart(this.sensorsData.temperature);
+          this.chartData.humidity = parseDataToChart(this.sensorsData.humidity);
+          this.chartData.soundLevel = parseDataToChart(this.sensorsData.sound);
+          this.loaded = true;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.serverError=true;
+        })
+        .finally();
     }
   },
   created() {
     this.roomNumber = this.$route.params.id;
     this.editLink = "/movieRoomSettings/" + this.roomNumber;
+    this.displayData();
+
   }
 };
 </script>
+
+<style lang="css">
+.alert_error{
+  transform: translateX(-50%);
+}
+</style>
 
 
