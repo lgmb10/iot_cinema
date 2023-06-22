@@ -78,8 +78,7 @@ export default {
         .catch((err) => {
           console.log(err);
           this.serverError=true;
-        })
-        .finally();
+        });
     }
   },
   created() {
