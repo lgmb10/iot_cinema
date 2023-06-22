@@ -8,6 +8,7 @@ require('dotenv').config();
 const connectDatabase = require('./config/database');
 
 const sensor = require('./routes/sensor');
+const sensorRange = require('./routes/sensorRange');
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
@@ -37,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', sensor);
+app.use('/api/v1', sensorRange);
 
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, './dist', 'index.html'));
