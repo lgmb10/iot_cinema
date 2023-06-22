@@ -19,7 +19,7 @@ exports.getSensorsByRoom = catchAsyncErrors(async (req, res, next) => {
     });
 })
 
-// Get all sensors recap => /api/v1/sensors/summary
+// Get all sensors recap => /api/v1/sensors
 exports.getSensorsSummary = catchAsyncErrors(async (req, res, next) => {
     const tempRoom1 = await Sensor.find({ room: 1, sensorType: 'temperature' }).sort({ createdAt: -1 }).limit(1);
     const humidRoom1 = await Sensor.find({ room: 1, sensorType: 'humidity' }).sort({ createdAt: -1 }).limit(1);
@@ -100,20 +100,38 @@ exports.getSensorsSummary = catchAsyncErrors(async (req, res, next) => {
     ])
 
     const sensorSummary = {
-        "room1": {
-            temperature: tempRoom1[0].sensorValue,
+        room1: {
+            temperature: {
+                value: tempRoom1[0].sensorValue,
+                date: tempRoom1[0].createdAt
+            },
             sound: avgSoundRoom1[0].averageSensorValue,
-            humidity: humidRoom1[0].sensorValue
+            humidity: {
+                value: humidRoom1[0].sensorValue,
+                date: humidRoom1[0].createdAt
+            }
         },
-        "room2": {
-            temperature: tempRoom2[0].sensorValue,
+        room2: {
+            temperature: {
+                value: tempRoom2[0].sensorValue,
+                date: tempRoom2[0].createdAt
+            },
             sound: avgSoundRoom2[0].averageSensorValue,
-            humidity: humidRoom2[0].sensorValue
+            humidity: {
+                value: humidRoom2[0].sensorValue,
+                date: humidRoom2[0].createdAt
+            }
         },
-        "room3": {
-            temperature: tempRoom3[0].sensorValue,
+        room3: {
+            temperature: {
+                value: tempRoom3[0].sensorValue,
+                date: tempRoom3[0].createdAt
+            },
             sound: avgSoundRoom3[0].averageSensorValue,
-            humidity: humidRoom3[0].sensorValue
+            humidity: {
+                value: humidRoom3[0].sensorValue,
+                date: humidRoom3[0].createdAt
+            }
         },
     }
 
