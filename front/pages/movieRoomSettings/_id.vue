@@ -21,6 +21,8 @@
               color="primary"
               filled
               dense
+              prefix="°C"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -35,6 +37,8 @@
               label="Température max"
               filled
               dense
+              prefix="°C"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -52,6 +56,8 @@
               color="blue darken-2"
               filled
               dense
+              prefix="%"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -66,6 +72,8 @@
               label="Taux d'humidité max"
               filled
               dense
+              prefix="%"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -83,6 +91,8 @@
               color="blue darken-2"
               filled
               dense
+              prefix="db"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -97,6 +107,8 @@
               label="Niveau sonore max"
               filled
               dense
+              prefix="db"
+              reverse
               :rules="inputRule"
             ></v-text-field>
 
@@ -104,6 +116,7 @@
         </v-row>
         <v-btn
           :disabled="!valid"
+          :loading="formPending"
           class="mt-4"
           @click="validate"
         >
@@ -118,14 +131,22 @@
         elevation="2"
         type="error"
         dismissible
-      >&nbsp;Une erreur s'est produite&nbsp;</v-alert>
+      >&nbsp;Une erreur s'est produite&nbsp;
+      </v-alert>
+    </div>
+    <div v-if="formSuccess" class="absolute top-3 left-1/2 alert_error">
+      <v-alert
+        color="green"
+        elevation="2"
+        type="success"
+        dismissible
+      >&nbsp;Les informations ont bien été enregistrées&nbsp;
+      </v-alert>
     </div>
   </div>
 </template>
 
 <script>
-import {parseDataToChart} from "~/utils/jsonParser";
-
 export default {
   name: "movieRoomSettings",
   layout: "DefaultLayout",
@@ -141,20 +162,54 @@ export default {
         soundLevelMin: null,
         soundLevelMax: null,
       },
-      inputRule : [v => !!v || 'Le champ ne peux pas être vide'],
-      data : null,
-      serverError : false,
+      inputRule: [
+        v => !!v || 'Le champ ne peux pas être vide',
+        v => /^(\d+(?:[\.\,]\d+)?)$/.test(v) || 'Format incorect. exemple : 22.5' ,
+      ],
+      data: null,
+      serverError: false,
+      formSuccess: false,
+      formPending: false,
     }
   },
   methods: {
-    validate () {
+    validate() {
+      this.formPending = true;
       this.$refs.form.validate()
-      console.log(JSON.stringify(this.formValue))
+      let formJSON = `{
+          "temperature": {
+              "room": ${this.roomNumber},
+              "sensorType": "temperature",
+              "sensorValueMin": ${this.formValue.tempMin},
+              "sensorValueMax": ${this.formValue.tempMax}
+          },
+          "humidity": {
+              "room": ${this.roomNumber},
+              "sensorType": "humidity",
+              "sensorValueMin": ${this.formValue.humidityMin},
+              "sensorValueMax": ${this.formValue.humidityMax}
+          },
+          "sound": {
+              "room": ${this.roomNumber},
+              "sensorType": "sound",
+              "sensorValueMin": ${this.formValue.soundLevelMin},
+              "sensorValueMax": ${this.formValue.soundLevelMax}
+          }
+      }`;
+      this.$api.setSensorsRanges(this.roomNumber, JSON.parse(formJSON))
+        .then((res) => {
+            this.formSuccess=true;
+        }).catch((err) => {
+        console.log(err);
+        this.serverError = true;
+      }).finally(() => {
+        this.formPending = false;
+      });
     },
     displayData() {
       this.$api.getSensorsRanges(this.roomNumber)
         .then((res) => {
-          this.data= res.sensorRanges;
+          this.data = res.sensorRanges;
           this.formValue.tempMin = this.data.temperature.sensorValueMin;
           this.formValue.tempMax = this.data.temperature.sensorValueMax;
           this.formValue.humidityMin = this.data.humidity.sensorValueMin;
@@ -164,9 +219,8 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.serverError=true;
-        })
-        .finally();
+          this.serverError = true;
+        });
     }
   },
   created() {
