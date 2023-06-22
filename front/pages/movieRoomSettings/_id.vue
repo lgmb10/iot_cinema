@@ -155,14 +155,12 @@ export default {
       this.$api.getSensorsRanges(this.roomNumber)
         .then((res) => {
           this.data= res.sensorRanges;
-          console.log(res);
           this.formValue.tempMin = this.data.temperature.sensorValueMin;
           this.formValue.tempMax = this.data.temperature.sensorValueMax;
           this.formValue.humidityMin = this.data.humidity.sensorValueMin;
           this.formValue.humidityMax = this.data.humidity.sensorValueMax;
           this.formValue.soundLevelMin = this.data.sound.sensorValueMin;
           this.formValue.soundLevelMax = this.data.sound.sensorValueMax;
-          console.log(this.formValue.tempMin);
         })
         .catch((err) => {
           console.log(err);
