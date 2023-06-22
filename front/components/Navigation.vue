@@ -5,7 +5,7 @@
         <div class="self-center flex items-center py-4">
           <img src="~/assets/images/logo.svg" alt="" class="block w-9 pr-1">
           <h1 class="text-3xl font-bold text-center text-sky-950 leading-none">
-            <NuxtLink to="/">CineSens</NuxtLink>
+            <NuxtLink to="/">CineSense</NuxtLink>
           </h1>
         </div>
         <nav class="pt-5">
