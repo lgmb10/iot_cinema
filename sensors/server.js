@@ -13,6 +13,29 @@ let client = mqtt.connect(options)
 
 client.on('connect', function () {
     console.log('Connected')
+    client.subscribe('room/1/#', function (err) {
+        if (!err) {
+            console.log('Subscribed to "room 1" channel successfully!')
+        } else {
+            console.error('Error subscribing to "room 1" channel:', err)
+        }
+    })
+
+    client.subscribe('room/2/#', function (err) {
+        if (!err) {
+            console.log('Subscribed to "room 2" channel successfully!')
+        } else {
+            console.error('Error subscribing to "room 1" channel:', err)
+        }
+    })
+
+    client.subscribe('room/3/#', function (err) {
+        if (!err) {
+            console.log('Subscribed to "room 3" channel successfully!')
+        } else {
+            console.error('Error subscribing to "room 1" channel:', err)
+        }
+    })
 })
 
 let temperatureValue = 22;
@@ -51,4 +74,4 @@ setInterval(() => {
     client.publish('room/1/sound', simulateValue(65, 117, 25, soundValue).toFixed(1))
     client.publish('room/2/sound', simulateValue(65, 117, 0.5, soundValue).toFixed(1))
     client.publish('room/3/sound', simulateValue(65, 117, 0.5, soundValue).toFixed(1))
-}, 2 * 60 * 1000);  // Exécute simulateValue chaque 2 minutes
+}, 5 * 1000);  // Exécute simulateValue chaque 2 minutes

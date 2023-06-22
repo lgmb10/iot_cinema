@@ -31,6 +31,8 @@ exports.initMqtt = (client) => {
 
     client.on('message', function (topic, message) {
         console.log('Received message on topic "' + topic + '": ' + message.toString())
-        Sensor.create({room: topic.split('/')[1], sensorType: topic.split('/')[2], sensorValue: message.toString()})
+        console.log({ room: topic.split('/')[1], sensorType: topic.split('/')[2], sensorValue: message.toString() })
+        //Sensor.create({room: topic.split('/')[1], sensorType: topic.split('/')[2], sensorValue: message.toString()})
+
     })
 }
