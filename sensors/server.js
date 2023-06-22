@@ -73,4 +73,4 @@ setInterval(() => {
     client.publish('room/1/sound', simulateValue(60, 125, 25, soundValue).toFixed(1))
     client.publish('room/2/sound', simulateValue(60, 125, 25, soundValue).toFixed(1))
     client.publish('room/3/sound', simulateValue(60, 125, 25, soundValue).toFixed(1))
-}, 5 * 1000);  // Exécute simulateValue chaque 2 minutes
+}, 5 * 60 * 1000);  // Exécute simulateValue chaque 5 minutes
