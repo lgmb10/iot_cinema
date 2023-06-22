@@ -105,7 +105,7 @@ exports.getSensorsSummary = catchAsyncErrors(async (req, res, next) => {
                 value: tempRoom1[0].sensorValue,
                 date: tempRoom1[0].createdAt
             },
-            sound: avgSoundRoom1[0].averageSensorValue,
+            sound: avgSoundRoom1[0].averageSensorValue.toFixed(2),
             humidity: {
                 value: humidRoom1[0].sensorValue,
                 date: humidRoom1[0].createdAt
@@ -116,7 +116,7 @@ exports.getSensorsSummary = catchAsyncErrors(async (req, res, next) => {
                 value: tempRoom2[0].sensorValue,
                 date: tempRoom2[0].createdAt
             },
-            sound: avgSoundRoom2[0].averageSensorValue,
+            sound: avgSoundRoom2[0].averageSensorValue.toFixed(2),
             humidity: {
                 value: humidRoom2[0].sensorValue,
                 date: humidRoom2[0].createdAt
@@ -127,7 +127,7 @@ exports.getSensorsSummary = catchAsyncErrors(async (req, res, next) => {
                 value: tempRoom3[0].sensorValue,
                 date: tempRoom3[0].createdAt
             },
-            sound: avgSoundRoom3[0].averageSensorValue,
+            sound: avgSoundRoom3[0].averageSensorValue.toFixed(2),
             humidity: {
                 value: humidRoom3[0].sensorValue,
                 date: humidRoom3[0].createdAt
