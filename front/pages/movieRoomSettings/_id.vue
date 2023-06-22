@@ -87,7 +87,7 @@
           >
             <v-text-field
               v-model="formValue.soundLevelMin"
-              label="Niveau sonore min"
+              label="Niveau sonore moyen min"
               color="blue darken-2"
               filled
               dense
@@ -104,7 +104,7 @@
           >
             <v-text-field
               v-model="formValue.soundLevelMax"
-              label="Niveau sonore max"
+              label="Niveau sonore moyen max"
               filled
               dense
               prefix="db"
