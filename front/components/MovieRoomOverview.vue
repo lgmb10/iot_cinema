@@ -4,22 +4,22 @@
     <p class="text-sm py-2">Informations en temps réel</p>
     <div class="flex gap-2 pb-3">
       <div
-        class="relative w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2">
+        class="relative w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': tempAlert}">
         <p class="text-sm">Température</p>
-        <p class="font-bold text-lg">{{ temp }}°C</p>
-        <span class="display-block text-xs text-slate-500">{{ getTime(tempTime) }}</span>
+        <p class="font-bold text-lg">{{ data.temperature.value }}°C</p>
+        <span class="display-block text-xs text-slate-500">{{ getTime(data.temperature.date) }}</span>
 
       </div>
       <div
-        class="w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2">
+        class="w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': tempAlert}">
         <p class="text-sm">Humidité</p>
-        <p class="font-bold text-lg">{{ humidity }}%</p>
-        <span class="display-block text-xs text-slate-500">{{ getTime(humidity) }}</span>
+        <p class="font-bold text-lg">{{ data.humidity.value }}%</p>
+        <span class="display-block text-xs text-slate-500">{{ getTime(data.humidity.date) }}</span>
       </div>
       <div
-        class="text-center w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-orange-300 border-2">
+        class="text-center w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': tempAlert}">
         <p class="text-sm">Niveau Sonore</p>
-        <p class="font-bold text-lg">{{ soundLevel }} db</p>
+        <p class="font-bold text-lg">{{ data.sound.average }} db</p>
         <span class="display-block text-xs text-slate-500">moyenne de la dernière heure</span>
       </div>
     </div>
@@ -29,6 +29,7 @@
       :to="'/movieRoom/'+roomNumber"
     >Détails
     </v-btn>
+
   </div>
 </template>
 
@@ -37,17 +38,26 @@ export default {
   name: "movieRoomOverview",
   props: {
     roomNumber : { default: "NaN"},
-    temp: { default: "NaN"},
-    tempTime: {type: String, default: "NaN"},
-    humidity: { default: "NaN"},
-    humidityTime: {type: String, default: "NaN"},
-    soundLevel: { default: "NaN"},
+    data : { type: Object, default: null},
+  },
+  data(){
+    return{
+      tempAlert: this.checkLimit(this.data.temperature.value, this.data.temperature),
+      humidityAlert: this.checkLimit(this.data.humidity.value, this.data.humidity),
+      soundAlert: this.checkLimit(this.data.sound.average, this.data.sound),
+    }
   },
   methods: {
     getTime(date) {
       let time =  new Date(date);
       return ("0" + time.getHours()).slice(-2) + 'h' + ("0" + time.getMinutes()).slice(-2);
+    },
+    checkLimit(sensorValue, sensor){
+      return sensorValue > sensor.range.max * 0.95 || sensorValue < sensor.range.min * 1.05;
     }
+  },
+  created() {
+    this.tempAlert=this.checkLimit(this.data.temperature.value, this.data.temperature)
   }
 }
 </script>
