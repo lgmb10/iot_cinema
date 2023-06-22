@@ -164,7 +164,7 @@ export default {
       },
       inputRule: [
         v => !!v || 'Le champ ne peux pas être vide',
-        v => /^(\d+(?:[\.\,]\d+)?)$/.test(v) || 'Format incorect. exemple : 22.5' ,
+        v => /^(\d+(?:[\.\,]\d+)?)$/.test(v) || 'Format incorrect. exemple : 22.5' ,
       ],
       data: null,
       serverError: false,

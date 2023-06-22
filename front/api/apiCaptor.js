@@ -15,7 +15,7 @@ export default ({ $axios, baseUrl }) => ({
   setSensorsRanges(id, item) {
     return $axios.put(`${baseUrl}/ranges/${id}`, item, {
       headers: {
-        'Content-Type': 'application/ld+json',
+        'Content-Type': 'application/json',
       },
     })
   },

@@ -53,7 +53,6 @@ export default {
     displayData() {
       this.$api.getAllInfo()
         .then((res) => {
-          console.log(res)
           this.sensorsData = res.sensorSummary;
           this.loaded = true;
         })
