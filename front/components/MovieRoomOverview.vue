@@ -11,13 +11,13 @@
 
       </div>
       <div
-        class="w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': tempAlert}">
+        class="w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': humidityAlert}">
         <p class="text-sm">Humidité</p>
         <p class="font-bold text-lg">{{ data.humidity.value }}%</p>
         <span class="display-block text-xs text-slate-500">{{ getTime(data.humidity.date) }}</span>
       </div>
       <div
-        class="text-center w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': tempAlert}">
+        class="text-center w-28 bg-white rounded-2xl px-2 py-3 flex flex-col justify-center items-center border-green-300 border-2" :class="{'border-orange-300': soundAlert}">
         <p class="text-sm">Niveau Sonore</p>
         <p class="font-bold text-lg">{{ data.sound.average }} db</p>
         <span class="display-block text-xs text-slate-500">moyenne de la dernière heure</span>
@@ -53,7 +53,7 @@ export default {
       return ("0" + time.getHours()).slice(-2) + 'h' + ("0" + time.getMinutes()).slice(-2);
     },
     checkLimit(sensorValue, sensor){
-      return sensorValue > sensor.range.max * 0.95 || sensorValue < sensor.range.min * 1.05;
+      return sensorValue > (sensor.range.max * 0.98) || sensorValue < (sensor.range.min * 1.02);
     }
   },
   created() {
